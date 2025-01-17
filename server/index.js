@@ -13,7 +13,10 @@ const PORT = process.env.PORT;
 app.use(express.json());
 app.use(cookiesParser());
 
-app.use(cors())
+app.use(cors({
+  origin:process.env.FRONTEND,
+  credentials:true
+}))
 
 // / Routes for testing is working on deploy
 app.get("/", (req, res) => {

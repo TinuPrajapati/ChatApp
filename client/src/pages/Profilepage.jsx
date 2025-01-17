@@ -10,7 +10,7 @@ const ProfilePage = () => {
   const [formData, setFormData] = useState({
     name: authUser?.name || "",
     email: authUser?.email || "",
-    image:""
+    image: ""
   });
 
   const handleChange = (e) => {
@@ -19,7 +19,7 @@ const ProfilePage = () => {
   }
 
   const handleImageUpload = async (e) => {
-    const { id} = e.target;
+    const { id } = e.target;
     const file = e.target.files[0];
     setFormData((prevData) => ({ ...prevData, [id]: file }));
     if (!file) return;
@@ -31,10 +31,16 @@ const ProfilePage = () => {
     };
     reader.readAsDataURL(file);
   };
+  // () => (isEditable ? handleUpdate() : setIsEditable(true))
 
-  const handleUpdate = async () => {
-    await updateProfile(formData);
-    setIsEditable(false);
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    if (isEditable) {
+      await updateProfile(formData);
+      setIsEditable(false);
+    }else{
+      setIsEditable(true);
+    }
   };
 
   return (
@@ -45,7 +51,7 @@ const ProfilePage = () => {
           <h1 className="text-2xl font-semibold text-center">Your Profile</h1>
 
           {/* Avatar Section */}
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col items-center">
             <div className="relative">
               <img
                 src={selectedImg}
@@ -72,8 +78,8 @@ const ProfilePage = () => {
           </div>
 
           {/* Profile Form */}
-          <form className="space-y-4">
-            <div className="space-y-1.5">
+          <form className="flex flex-col items-center gap-2">
+            <div className="space-y-1.5 w-full">
               <label className="text-sm text-zinc-400 flex items-center gap-2" htmlFor="name">
                 <User className="w-4 h-4" />
                 Full Name
@@ -88,7 +94,7 @@ const ProfilePage = () => {
               />
             </div>
 
-            <div className="space-y-1.5">
+            <div className="space-y-1.5 w-full">
               <label className="text-sm text-zinc-400 flex items-center gap-2" htmlFor="email">
                 <Mail className="w-4 h-4" />
                 Email Address
@@ -102,16 +108,13 @@ const ProfilePage = () => {
                 readOnly={!isEditable}
               />
             </div>
-          </form>
-
-          <div className="text-center mt-2">
             <button
               className="btn btn-primary px-6 text-xl text-white"
-              onClick={() => (isEditable ? handleUpdate() : setIsEditable(true))}
+              onClick={handleUpdate}
             >
               {isEditable ? "Update" : "Change"}
             </button>
-          </div>
+          </form>
         </div>
 
         {/* Right Section */}

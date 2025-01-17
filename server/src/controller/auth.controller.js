@@ -77,21 +77,24 @@ export const updateProfile = async (req, res) => {
   try {
     const { name,email } = req.body;
     const {path,filename}= req.file;
-    console.log(req.body,req.file)
     const id = req.user._id;
 
-    // if (!profilePic) {
-    //   return res
-    //     .status(400)
-    //     .json({ message: "Please provide profile picture" });
-    // }
-    // const uploadResponse = await cloudinary.uploader.upload(profilePic);
-    // const user = await User.findByIdAndUpdate(
-    //   id,
-    //   { profile: uploadResponse.secure_url },
-    //   { new: true }
-    // );
-    // res.status(200).json({ message: "Profile updated successfully", user });
+    if (!path) {
+      return res
+        .status(400)
+        .json({ message: "Please provide profile picture" });
+    }
+    const user = await User.findById(id);
+    if(user.filename!==""){
+      await cloudinary.uploader.destroy(user.filename);
+    }
+
+    const updateUserDetails = await User.findByIdAndUpdate(
+      id,
+      { profile: path,name,email,filename },
+      { new: true }
+    );
+    res.status(200).json({ message: "Profile updated successfully", updateUserDetails });
   } catch (error) {
     console.log(`Error in update profile controller: ${error}`);
     res.status(500).json({ message: "Internal Server Error" });

@@ -76,7 +76,7 @@ export const useAuthStore = create((set,get)=>({
                     "Content-Type":"multipart/form-data",
                 }
             });
-            set({authUser:res.data.user})
+            set({authUser:res.data.updateUserDetails})
             toast.success(res.data.message)
         }catch(error){
             toast.error(error.response.data.message)

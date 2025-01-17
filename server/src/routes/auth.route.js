@@ -8,6 +8,7 @@ import {
 } from "../controller/auth.controller.js";
 import { protectedRoute } from "../middleware/auth.middleware.js";
 const router = express.Router();
+import {upload} from "../lib/cloudinary.js"
 
 // signup routes
 router.post("/signup", signup);
@@ -18,7 +19,7 @@ router.post("/login", login);
 // logout routes
 router.post("/logout", logout);
 
-router.put("/update-profile", protectedRoute, updateProfile);
+router.put("/update-profile", protectedRoute,upload.single("image"), updateProfile);
 
 router.get("/check", protectedRoute, checkAuth);
 

@@ -8,12 +8,20 @@ const ProfilePage = () => {
   const [selectedImg, setSelectedImg] = useState(authUser.profile || avatar);
   const [isEditable, setIsEditable] = useState(false);
   const [formData, setFormData] = useState({
-    fullName: authUser?.name || "",
+    name: authUser?.name || "",
     email: authUser?.email || "",
+    image:""
   });
 
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [id]: value }));
+  }
+
   const handleImageUpload = async (e) => {
+    const { id} = e.target;
     const file = e.target.files[0];
+    setFormData((prevData) => ({ ...prevData, [id]: file }));
     if (!file) return;
 
     const reader = new FileReader();
@@ -25,11 +33,7 @@ const ProfilePage = () => {
   };
 
   const handleUpdate = async () => {
-    await updateProfile({
-      profilePic: selectedImg,
-      name: formData.fullName,
-      email: formData.email,
-    });
+    await updateProfile(formData);
     setIsEditable(false);
   };
 
@@ -50,13 +54,13 @@ const ProfilePage = () => {
               />
               {isEditable && (
                 <label
-                  htmlFor="avatar-upload"
+                  htmlFor="image"
                   className="absolute bottom-0 right-0 bg-base-content hover:scale-105 p-2 rounded-full cursor-pointer transition-all duration-200"
                 >
                   <Camera className="w-5 h-5 text-base-200" />
                   <input
                     type="file"
-                    id="avatar-upload"
+                    id="image"
                     className="hidden"
                     accept="image/*"
                     onChange={handleImageUpload}
@@ -70,29 +74,31 @@ const ProfilePage = () => {
           {/* Profile Form */}
           <form className="space-y-4">
             <div className="space-y-1.5">
-              <label className="text-sm text-zinc-400 flex items-center gap-2">
+              <label className="text-sm text-zinc-400 flex items-center gap-2" htmlFor="name">
                 <User className="w-4 h-4" />
                 Full Name
               </label>
               <input
+                id="name"
                 type="text"
                 className="px-4 py-2.5 bg-base-200 rounded-lg border w-full"
-                value={formData.fullName}
-                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                value={formData.name}
+                onChange={handleChange}
                 readOnly={!isEditable}
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-sm text-zinc-400 flex items-center gap-2">
+              <label className="text-sm text-zinc-400 flex items-center gap-2" htmlFor="email">
                 <Mail className="w-4 h-4" />
                 Email Address
               </label>
               <input
+                id="email"
                 type="email"
                 className="px-4 py-2.5 bg-base-200 rounded-lg border w-full"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={handleChange}
                 readOnly={!isEditable}
               />
             </div>

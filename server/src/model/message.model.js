@@ -19,6 +19,9 @@ const messageSchema = new Schema(
     image: {
       type: String,
     },
+    filename:{
+      type:String
+    }
   },
   {
     timestamps: true,

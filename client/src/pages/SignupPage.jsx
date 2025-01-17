@@ -29,6 +29,11 @@ const SignUpPage = () => {
     if (validateForm()) signup(formData);
   };
 
+  const handleChange = (e) => {
+    const { id, value } = e.target
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  }
+
   return (
     <div className="flex w-full h-[90%] p-4">
       {/* Left side */}
@@ -45,38 +50,69 @@ const SignUpPage = () => {
 
         {/* Sign-up Form */}
         <form onSubmit={handleSubmit} className=" w-[100%] flex flex-col items-center">
-          {[
-            { label: "Full Name", type: "text", placeholder: "John Doe", value: formData.fullName, icon: <User /> },
-            { label: "Email", type: "email", placeholder: "you@example.com", value: formData.email, icon: <Mail /> },
-            { label: "Password", type: showPassword ? "text" : "password", placeholder: "••••••••", value: formData.password, icon: <Lock /> },
-          ].map(({ label, type, placeholder, value, icon }, idx) => (
-            <div key={idx} className="form-control w-[100%]">
-              <label className="label ">
-                {label}
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  {icon}
-                </div>
-                <input
-                  type={type}
-                  className="input input-bordered w-full pl-10 rounded-md"
-                  placeholder={placeholder}
-                  value={value}
-                  onChange={(e) => setFormData({ ...formData, [label.toLowerCase().replace(" ", "")]: e.target.value })}
-                />
-                {label === "Password" && (
-                  <button
-                    type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? <EyeOff className="size-5 text-base-content/40" /> : <Eye className="size-5 text-base-content/40" />}
-                  </button>
-                )}
-              </div>
+          {/* Name Input */}
+          <div className="form-control w-full">
+            <label className="label pl-4" htmlFor="fullName">
+              Full Name
+            </label>
+            <div className="relative flex items-center">
+              <User className="h-5 w-5 text-base-content/40 absolute left-3 pointer-events-none" />
+              <input
+              id="fullName"
+                type="text"
+                className="input input-bordered w-full pl-10 rounded-md"
+                placeholder="Enter your Full Name"
+                value={formData.fullName}
+                onChange={handleChange}
+              />
             </div>
-          ))}
+          </div>
+          {/* Email Input */}
+          <div className="form-control w-full">
+            <label className="label pl-4" htmlFor="email">
+              Email
+            </label>
+            <div className="relative flex items-center">
+              <Mail className="h-5 w-5 text-base-content/40 absolute left-3 pointer-events-none" />
+              <input
+                id="email"
+                type="email"
+                className="input input-bordered w-full pl-10 rounded-md"
+                placeholder="you@example.com"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          {/* Password Input */}
+          <div className="form-control w-full">
+            <label className="label pl-4" htmlFor="password">
+              Password
+            </label>
+            <div className="relative flex items-center">
+              <Lock className="h-5 w-5 text-base-content/40 absolute left-3 pointer-events-none" />
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                className="input input-bordered w-full pl-10 rounded-md"
+                placeholder="••••••••"
+                value={formData.password}
+                onChange={handleChange}
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5 text-base-content/40" />
+                ) : (
+                  <Eye className="h-5 w-5 text-base-content/40" />
+                )}
+              </button>
+            </div>
+          </div>
 
           {/* Submit Button */}
           <button type="submit" className="btn btn-primary w-[50%] mt-3 rounded-md text-xl" disabled={isSigningUp}>

@@ -1,4 +1,4 @@
-import cloudinary from "../lib/cloudinary.js";
+import {cloudinary} from "../lib/cloudinary.js";
 import { generateToken } from "../lib/utils.js";
 import User from "../model/user.model.js";
 import bcrypt from "bcryptjs";
@@ -75,21 +75,23 @@ export const logout = async (req, res) => {
 // Update Profile Route
 export const updateProfile = async (req, res) => {
   try {
-    const { profilePic } = req.body;
+    const { name,email } = req.body;
+    const {path,filename}= req.file;
+    console.log(req.body,req.file)
     const id = req.user._id;
 
-    if (!profilePic) {
-      return res
-        .status(400)
-        .json({ message: "Please provide profile picture" });
-    }
-    const uploadResponse = await cloudinary.uploader.upload(profilePic);
-    const user = await User.findByIdAndUpdate(
-      id,
-      { profile: uploadResponse.secure_url },
-      { new: true }
-    );
-    res.status(200).json({ message: "Profile updated successfully", user });
+    // if (!profilePic) {
+    //   return res
+    //     .status(400)
+    //     .json({ message: "Please provide profile picture" });
+    // }
+    // const uploadResponse = await cloudinary.uploader.upload(profilePic);
+    // const user = await User.findByIdAndUpdate(
+    //   id,
+    //   { profile: uploadResponse.secure_url },
+    //   { new: true }
+    // );
+    // res.status(200).json({ message: "Profile updated successfully", user });
   } catch (error) {
     console.log(`Error in update profile controller: ${error}`);
     res.status(500).json({ message: "Internal Server Error" });

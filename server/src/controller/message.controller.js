@@ -38,7 +38,9 @@ export const getMessages = async (req, res) => {
 export const sendMessage = async (req, res) => {
     try {
         const {text}=req.body;
-        const {path} = req.file;
+        var path = ""
+        if(req.file)
+        path = req?.file?.path;
         const senderId=req.user._id;
         const receiverId=req.params.id;
 

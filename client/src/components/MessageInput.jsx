@@ -25,9 +25,10 @@ const MessageInput = () => {
     reader.readAsDataURL(file);
   };
 
-  // const handleChange=(e)=>{
-  //   const {id,value}
-  // }
+  const handleChange=(e)=>{
+    const {id,value} = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }))
+  }
 
   const removeImage = () => {
     setImagePreview(null);
@@ -82,7 +83,7 @@ const MessageInput = () => {
           className="flex-1 input input-bordered rounded-lg input-sm sm:input-md"
           placeholder="Type a message..."
           value={formData.text}
-          onChange={(e) => setFormData((prev) => ({ ...prev, [id]: value }))}
+          onChange={handleChange}
         />
         <input
           id="image"

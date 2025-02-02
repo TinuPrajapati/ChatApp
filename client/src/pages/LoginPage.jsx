@@ -18,15 +18,15 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex w-full h-[90%] p-4">
+    <div className="flex w-full h-[90%] p-2 sm:p-4">
       {/* Left Side - Form */}
-      <div className="flex flex-col justify-center items-center sm:p-12 w-1/2 h-full p-12">
-        <div className="text-center flex flex-col items-center gap-2 mb-4">
+      <div className="flex flex-col justify-center items-center w-full sm:p-12 lg:w-1/2 h-full">
+        <div className="text-center flex flex-col items-center mb-2 sm:gap-2 sm:mb-4">
           <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center hover:bg-primary/20 transition-colors"
           >
             <MessageSquare className="w-6 h-6 text-primary" />
           </div>
-          <h1 className="text-3xl font-bold mt-1">Welcome Back</h1>
+          <h1 className="text-3xl font-bold sm:mt-1">Welcome Back</h1>
           <p className="text-base-content/60">Sign in to your account</p>
         </div>
 

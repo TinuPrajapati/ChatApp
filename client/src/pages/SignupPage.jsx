@@ -35,24 +35,24 @@ const SignUpPage = () => {
   }
 
   return (
-    <div className="flex w-full h-[90%] p-4">
+    <div className="flex w-full h-[90%] p-2 sm:p-4">
       {/* Left side */}
-      <div className="flex flex-col sm:px-12 sm:py-0 w-1/2 h-full p-12">
+      <div className="flex flex-col justify-center items-center w-full gap-4 sm:p-12 lg:w-1/2 h-full">
         {/* Logo */}
         <div className="text-center flex flex-col items-center mb-2">
           <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center hover:bg-primary/20 transition-colors"
           >
-            <MessageSquare className="w-6 h-6 text-primary" />
+            <MessageSquare className="w-10 h-10 lg:w-6 lg:h-6 text-primary" />
           </div>
           <h1 className="text-3xl font-bold">Create Account</h1>
           <p className="text-base-content/60">Get started with your free account</p>
         </div>
 
         {/* Sign-up Form */}
-        <form onSubmit={handleSubmit} className=" w-[100%] flex flex-col items-center">
+        <form onSubmit={handleSubmit} className=" w-[90%] flex flex-col items-center">
           {/* Name Input */}
           <div className="form-control w-full">
-            <label className="label pl-4" htmlFor="fullName">
+            <label className="label pl-4 text-xl" htmlFor="fullName">
               Full Name
             </label>
             <div className="relative flex items-center">
